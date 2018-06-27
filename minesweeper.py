@@ -7,29 +7,29 @@ def set_grid(grid_size=10,numberofmines=15):
     show_grid(empty_grid)
     mines = getmines(grid_size,numberofmines)
     for x,y in mines:
-        empty_grid[x][y]='X'
+        empty_grid[x][y]='•'
     empty_grid = setnumbers(empty_grid)
     return empty_grid
 def setnumbers(grid):
     grid_size = len(grid)
     for i in range(grid_size):
         for j in range(grid_size):
-            if grid[i][j]=='X':
-                if i-1>=0 and j-1>=0 and grid[i-1][j-1]!='X':
+            if grid[i][j]=='•':
+                if i-1>=0 and j-1>=0 and grid[i-1][j-1]!='•':
                     grid[i-1][j-1]+=1
-                if i-1>=0 and j>=0 and grid[i-1][j]!='X':
+                if i-1>=0 and j>=0 and grid[i-1][j]!='•':
                     grid[i-1][j]+=1
-                if i-1>=0 and j+1<grid_size and grid[i-1][j+1]!='X':
+                if i-1>=0 and j+1<grid_size and grid[i-1][j+1]!='•':
                     grid[i-1][j+1]+=1
-                if i>=0 and j-1>=0 and grid[i][j-1]!='X':
+                if i>=0 and j-1>=0 and grid[i][j-1]!='•':
                     grid[i][j-1]+=1
-                if i>=0 and j+1<grid_size and grid[i][j+1]!='X':
+                if i>=0 and j+1<grid_size and grid[i][j+1]!='•':
                     grid[i][j+1]+=1
-                if i+1<grid_size and j-1>=0 and grid[i+1][j-1]!='X':
+                if i+1<grid_size and j-1>=0 and grid[i+1][j-1]!='•':
                     grid[i+1][j-1]+=1
-                if i+1<grid_size and j>=0 and grid[i+1][j]!='X':
+                if i+1<grid_size and j>=0 and grid[i+1][j]!='•':
                     grid[i+1][j]+=1
-                if i+1<grid_size and j+1<grid_size and grid[i+1][j+1]!='X':
+                if i+1<grid_size and j+1<grid_size and grid[i+1][j+1]!='•':
                     grid[i+1][j+1]+=1
     return grid
 def getmines(grid_size,numberofmines=15):
@@ -73,7 +73,7 @@ def play_game(grid_size=10,numberofmines=15):
         if (cell[0] in ascii_lowercase[:grid_size]) and (cell[1] in digits[:grid_size]) and (len(cell)==2):
             row=int(cell[1])
             col=ord(cell[0])-ord('a')
-            if grid[row][col]=='X':
+            if grid[row][col]=='•':
                 print('Oops! Thats a Mine! Game Over.')
                 show = [[True]*grid_size]*grid_size
                 show_grid(grid)
@@ -96,35 +96,35 @@ def resetgrid(grid,row,col):
         empty_neighbours=[[row,col]]
         show[row][col]=True
         for i,j in empty_neighbours:
-            if i-1>=0 and j-1>=0 and grid[i-1][j-1]!='X':
+            if i-1>=0 and j-1>=0 and grid[i-1][j-1]!='•':
                 if grid[i-1][j-1]==0 and [i-1,j-1] not in empty_neighbours:
                     empty_neighbours.append([i-1,j-1])
                 show[i-1][j-1]=True
-            if i-1>=0 and j>=0 and grid[i-1][j]!='X':
+            if i-1>=0 and j>=0 and grid[i-1][j]!='•':
                 if grid[i-1][j]==0 and [i-1,j] not in empty_neighbours:
                     empty_neighbours.append([i-1,j])
                 show[i-1][j]=True
-            if i-1>=0 and j+1<grid_size and grid[i-1][j+1]!='X':
+            if i-1>=0 and j+1<grid_size and grid[i-1][j+1]!='•':
                 if grid[i-1][j+1]==0 and [i-1,j+1] not in empty_neighbours:
                     empty_neighbours.append([i-1,j+1])
                 show[i-1][j+1]=True
-            if i>=0 and j-1>=0 and grid[i][j-1]!='X':
+            if i>=0 and j-1>=0 and grid[i][j-1]!='•':
                 if grid[i][j-1]==0 and [i,j-1] not in empty_neighbours:
                     empty_neighbours.append([i,j-1])
                 show[i][j-1]=True
-            if i>=0 and j+1<grid_size and grid[i][j+1]!='X':
+            if i>=0 and j+1<grid_size and grid[i][j+1]!='•':
                 if grid[i][j+1]==0 and [i,j+1] not in empty_neighbours:
                     empty_neighbours.append([i,j+1])
                 show[i][j+1]=True
-            if i+1<grid_size and j-1>=0 and grid[i+1][j-1]!='X':
+            if i+1<grid_size and j-1>=0 and grid[i+1][j-1]!='•':
                 if grid[i+1][j-1]==0 and [i+1,j-1] not in empty_neighbours:
                     empty_neighbours.append([i+1,j-1])
                 show[i+1][j-1]=True
-            if i+1<grid_size and j>=0 and grid[i+1][j]!='X':
+            if i+1<grid_size and j>=0 and grid[i+1][j]!='•':
                 if grid[i+1][j]==0 and [i+1,j] not in empty_neighbours:
                     empty_neighbours.append([i+1,j])
                 show[i+1][j]=True
-            if i+1<grid_size and j+1<grid_size and grid[i+1][j+1]!='X':
+            if i+1<grid_size and j+1<grid_size and grid[i+1][j+1]!='•':
                 if grid[i+1][j+1]==0 and [i+1,j+1] not in empty_neighbours:
                     empty_neighbours.append([i+1,j+1])
                 show[i+1][j+1]=True
