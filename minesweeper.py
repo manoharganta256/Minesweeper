@@ -130,4 +130,4 @@ def resetgrid(grid,row,col):
                 show[i+1][j+1]=True
     else:
         show[row][col]=True
-play_game(grid_size=9,numberofmines=10)
+play_game(grid_size=10,numberofmines=15)
