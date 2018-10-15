@@ -1,8 +1,9 @@
 from string import ascii_lowercase, digits
 from random import randint
+import sys
 
 
-def set_grid(grid_size=10, numberofmines=15):
+def set_grid(grid_size, numberofmines):
     empty_grid = [[0 for i in range(grid_size)] for i in range(grid_size)]
     global show
     show = [[False for i in range(grid_size)] for i in range(grid_size)]
@@ -59,33 +60,39 @@ def getcell(grid_size):
 def show_grid(grid):
     grid_size = len(grid)
     toplabel = '    '
-    for i in ascii_lowercase[:grid_size]:
-        toplabel += i+'   '
+    for i in range(grid_size):
+        toplabel += str(i)
+        if i > 9:
+            toplabel += '  '
+        else:
+            toplabel += '   '
     print(toplabel)
     horizontal = ''
     for i in range(grid_size):
-        s = str(i) + ' | '
+        s = ascii_lowercase[i]+' | '
         for j in range(grid_size):
             if not show[i][j]:
-                s += ' ' + ' | '
+                s += ' '+' | '
             else:
                 s += str(grid[i][j])+' | '
-        horizontal = '----' * grid_size
-        print('   ' + horizontal)
+        horizontal = '----'*grid_size
+        print('   '+horizontal)
         print(s)
-    print('   ' + horizontal)
+    print('   '+horizontal)
 
 
 def play_game(grid_size=10, numberofmines=15):
-    print('Type the column followed by the row (eg. a5).')
+    print('Type the row followed by the column (eg. a5).')
     grid = set_grid(grid_size, numberofmines)
     global show
     while True:
-        print('Enter Cell :', end=' ')
+        print('Enter Cell(q to Quit) :', end=' ')
         cell = input()
-        if (cell[0] in ascii_lowercase[:grid_size]) and (cell[1] in digits[:grid_size]) and (len(cell) == 2):
-            row = int(cell[1])
-            col = ord(cell[0])-ord('a')
+        if cell == 'q':
+            sys.exit(0)
+        if (cell[0] in ascii_lowercase[:grid_size]) and (int(cell[1:]) < grid_size) and (len(cell) == 2 or 3):
+            col = int(cell[1:])
+            row = ord(cell[0])-ord('a')
             if grid[row][col] == '•':
                 print('Oops! Thats a Mine! Game Over.')
                 show = [[True]*grid_size]*grid_size
@@ -147,4 +154,22 @@ def resetgrid(grid, row, col):
         show[row][col] = True
 
 
-play_game(grid_size=10, numberofmines=15)
+if __name__ == '__main__':
+    print("1. Grid Size = 9\n2.Grid Size = 16\n3.Custom\nYour Choice: ",end = "")
+    choice = int(input())
+    grid_size = None
+    numberofmines = None
+    if choice == 1:
+        grid_size = 9
+        numberofmines = 10
+        play_game(grid_size, numberofmines)
+    elif choice == 2:
+        grid_size = 16
+        numberofmines = 40
+        play_game(grid_size, numberofmines)
+    elif choice == 3:
+        grid_size = int(input("Enter Grid Size: "))
+        numberofmines = int(input("Enter numberofmines: "))
+        play_game(grid_size, numberofmines)
+    else:
+        print("I think you don't wanna play")
