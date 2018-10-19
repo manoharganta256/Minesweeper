@@ -123,7 +123,7 @@ def play_game(grid_size=10, numberofmines=15):
         show_grid(grid)
         count = sum([row.count(False) for row in show])
         count += flags
-        print('Remaining Cells :', count, 'Mines :', numberofmines)
+        print("Remaining cells: {0}(Flags = {1}) Mines: {2}".format(count-flags,flags,numberofmines))
         if count <= numberofmines:
             print('Congratulation. YOU WON!')
             break
