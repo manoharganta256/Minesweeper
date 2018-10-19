@@ -83,19 +83,36 @@ def show_grid(grid):
 
 def play_game(grid_size=10, numberofmines=15):
     print('Type the row followed by the column (eg. a5).')
+    print('Add f to add a flag (eg. b10f)')
     grid = set_grid(grid_size, numberofmines)
     global show
+    flag = False
+    flags = 0
     while True:
         print('Enter Cell(q to Quit) :', end=' ')
         cell = input()
         if cell == 'q':
             sys.exit(0)
+        if cell[-1] == 'f':
+            cell = cell[:-1]
+            flag = True
         if (cell[0] in ascii_lowercase[:grid_size]) and (int(cell[1:]) < grid_size) and (len(cell) == 2 or 3):
             col = int(cell[1:])
             row = ord(cell[0])-ord('a')
-            if grid[row][col] == '•':
+            if flag:
+                flag = False
+                if grid[row][col] == '•':
+                    grid[row][col] = 'F'
+                    show[row][col] = True
+                    flags += 1
+                else:
+                    print("Wrong Flag! That's not a mine")
+                    show = [[True] * grid_size] * grid_size
+                    show_grid(grid)
+                    break
+            elif grid[row][col] == '•':
                 print('Oops! Thats a Mine! Game Over.')
-                show = [[True]*grid_size]*grid_size
+                show = [[True] * grid_size] * grid_size
                 show_grid(grid)
                 break
             else:
@@ -105,7 +122,8 @@ def play_game(grid_size=10, numberofmines=15):
             continue
         show_grid(grid)
         count = sum([row.count(False) for row in show])
-        print('Remaining Cells :', count, 'Mines :', numberofmines)
+        count += flags
+        print("Remaining cells: {0}(Flags = {1}) Mines: {2}".format(count-flags,flags,numberofmines))
         if count <= numberofmines:
             print('Congratulation. YOU WON!')
             break
